@@ -4,62 +4,102 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Echo Bloom</title>
+  <title>Scrollscape</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <main class="page">
-    <section class="intro">
-      <h1>Echo Bloom</h1>
-      <p>
-        A simple click-based sound prototype. Click each small image button to turn a sound layer on or off.
-      </p>
+  <div class="progress">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <nav class="mood-nav" aria-label="Scroll mood navigation">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </nav>
+
+  <main>
+    <section class="hero section" data-mood="start">
+      <div class="hero-content">
+        <p class="eyebrow">Scroll Interaction Prototype</p>
+        <h1>Scrollscape</h1>
+        <p class="intro-text">
+          A calm browser experience where scrolling becomes the main interaction.
+          Move through different visual moods by slowly scrolling down the page.
+        </p>
+        <p class="scroll-hint">Scroll to begin ↓</p>
+      </div>
+
+      <div class="ambient-shape shape-a"></div>
+      <div class="ambient-shape shape-b"></div>
     </section>
 
-    <section class="sound-board">
-  <button class="seed" data-sound="rain">
-    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Rain_icon.svg" alt="Rain icon" />
-    <span>Rain</span>
-  </button>
+    <section class="section mood-section morning" data-mood="morning">
+      <div class="scene-card">
+        <p class="number">01</p>
+        <h2>Morning Focus</h2>
+        <p>
+          The first scroll layer introduces a soft study mood. The brighter gradient
+          and slow fade-in create a gentle start to the experience.
+        </p>
+      </div>
 
-  <button class="seed" data-sound="wind">
-    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Weather_Icons_-_wind.svg" alt="Wind icon" />
-    <span>Wind</span>
-  </button>
-
-  <button class="seed" data-sound="tone">
-    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Speaker_Icon.svg" alt="Speaker icon" />
-    <span>Tone</span>
-  </button>
-
-  <button class="seed" data-sound="pulse">
-    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Sound_wave_holding_shape_-_Medium_02.svg" alt="Sound wave icon" />
-    <span>Pulse</span>
-  </button>
-
-  <button class="seed" data-sound="night">
-    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Moon_symbol_crescent.svg" alt="Moon icon" />
-    <span>Night</span>
-  </button>
-</section>
+      <div class="visual visual-sun">
+        <span></span>
+      </div>
     </section>
 
-    <section class="panel">
-      <p id="status">No sound layers active.</p>
-      <button id="reset">Reset</button>
+    <section class="section mood-section rain" data-mood="rain">
+      <div class="scene-card">
+        <p class="number">02</p>
+        <h2>Rain Pause</h2>
+        <p>
+          This section slows the visual rhythm. The cool tones and falling lines
+          suggest a quiet pause between moments of focus.
+        </p>
+      </div>
+
+      <div class="visual rain-lines">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </section>
 
-    <section class="notes">
-      <h2>Concept</h2>
-      <p>
-        Echo Bloom uses click as the main interaction. The user clicks small image buttons to activate or deactivate different sound layers. The calm colours, round shapes and soft visual feedback match the relaxation context.
-      </p>
+    <section class="section mood-section night" data-mood="night">
+      <div class="scene-card">
+        <p class="number">03</p>
+        <h2>Night Drift</h2>
+        <p>
+          The final mood becomes darker and more reflective. The scroll journey ends
+          with a slower and calmer visual atmosphere.
+        </p>
+      </div>
 
-      <h2>Image Sources</h2>
-      <p>
-        Images are linked from Wikimedia Commons: Rain on window, Wind turbine Holderness, FullMoon2010, Rain drops, and Night sky.
-      </p>
+      <div class="visual moon">
+        <span></span>
+      </div>
+    </section>
+
+    <section class="reflection section" data-mood="end">
+      <div class="reflection-box">
+        <h2>Prototype Concept</h2>
+        <p>
+          Scrollscape uses scroll as the main browser interaction. Instead of clicking
+          buttons or navigating to different pages, the user simply scrolls to move
+          through calm visual moods. The changing background, progress bar, animated
+          shapes and fade-in text all respond to the user's scroll position.
+        </p>
+
+        <h2>Sources</h2>
+        <p>
+          No external images, audio, fonts or JavaScript libraries are used. All visual
+          elements are created with original HTML, CSS and JavaScript.
+        </p>
+      </div>
     </section>
   </main>
 
