@@ -1,64 +1,58 @@
 /*
   Scrollscape - Scroll Interaction Script
 
-  This JavaScript file controls the scroll-based interaction. The prototype uses
-  scroll as the main browser action, so the script listens to the user's position
-  on the page and changes the interface in response.
+  This script controls the scroll-based interaction. The main action of the
+  prototype is scroll, so the interface changes when the user moves through
+  the page.
 
-  The first part uses Intersection Observer. This browser API detects when each
-  section enters the viewport. When a section becomes visible, the script adds a
-  "visible" class. CSS then uses that class to fade in text cards and visual shapes.
-  This creates a clear response to the user's scroll movement.
+  Intersection Observer detects when a section enters the viewport. When the
+  section becomes visible, the script adds a "visible" class. CSS then uses
+  that class to fade in the text card and visual element.
 
-  The script also reads the data-mood value on each section. For example, a section
-  may have data-mood="morning" or data-mood="rain". When that section is visible,
-  the body receives the same class name. This changes the background gradient and
-  makes each part of the scroll journey feel like a different environment.
+  Each section has a data-mood value, such as "morning", "rain" or "night".
+  When a section is visible, the same value is added as a class to the body.
+  This changes the page background and makes each scroll section feel like a
+  different mood.
 
-  The progress bar is another feedback system. It shows how far the user has moved
-  through the page. As the user scrolls down, the bar grows from left to right. This
-  makes the action of scrolling more visible and gives the user a sense of progress.
+  The progress bar shows the user's scroll position. As the user scrolls down,
+  the bar becomes wider. The side dots also update to show the current section.
+  These features make the scroll action more visible to the user.
 
-  The navigation dots on the right side are updated based on the current section.
-  They are not used as the main interaction, because the assignment focus is scroll.
-  Instead, they support the scroll interaction by showing which stage of the journey
-  the user is currently viewing.
-
-  No external JavaScript libraries are used. The code uses standard browser features
-  only, which keeps the prototype original and suitable for the assignment requirements.
+  No external JavaScript libraries are used.
 */
 
 const sections = document.querySelectorAll(".section");
 const progressFill = document.querySelector("#progressFill");
 const dots = document.querySelectorAll(".dot");
 
-const observerOptions = {
-  threshold: 0.45
-};
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const currentSection = entry.target;
+        const mood = currentSection.dataset.mood;
 
-const sectionObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      const currentSection = entry.target;
-      const mood = currentSection.dataset.mood;
+        currentSection.classList.add("visible");
 
-      currentSection.classList.add("visible");
+        document.body.className = "";
+        document.body.classList.add(mood);
 
-      document.body.className = "";
-      document.body.classList.add(mood);
-
-      updateDots(currentSection);
-    }
-  });
-}, observerOptions);
+        updateDots(currentSection);
+      }
+    });
+  },
+  {
+    threshold: 0.45
+  }
+);
 
 sections.forEach((section) => {
-  sectionObserver.observe(section);
+  observer.observe(section);
 });
 
 function updateDots(currentSection) {
-  const sectionArray = Array.from(sections);
-  const index = sectionArray.indexOf(currentSection);
+  const sectionList = Array.from(sections);
+  const index = sectionList.indexOf(currentSection);
 
   dots.forEach((dot) => {
     dot.classList.remove("active");
@@ -71,8 +65,8 @@ function updateDots(currentSection) {
 
 window.addEventListener("scroll", () => {
   const scrollTop = window.scrollY;
-  const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = (scrollTop / documentHeight) * 100;
+  const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = (scrollTop / pageHeight) * 100;
 
   progressFill.style.width = progress + "%";
 });

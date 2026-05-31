@@ -1,9 +1,27 @@
 /*
-  Scrollscape is a scroll-based relaxation prototype.
-  The main action is scroll. As the user moves through the page,
-  the background, progress bar, side dots and scene content respond.
-  This keeps the prototype focused on one browser interaction instead
-  of becoming a full website.
+  Scrollscape is a scroll-based browser interaction prototype.
+
+  The chosen action is Scroll. The context is relaxation and focused study.
+  I chose scroll because it is a basic browser action that can naturally create
+  a feeling of moving through a digital space.
+
+  The interface uses soft gradients, large spacing, rounded cards and slow
+  animations to match the calm context. Each section has a different visual
+  mood: Morning Focus, Rain Pause and Night Drift.
+
+  The scroll interaction gives several types of feedback. The top progress bar
+  shows the user's position on the page. The side dots show the current section.
+  The background changes when a new section enters the viewport. Text cards and
+  visual elements fade in as the user scrolls.
+
+  I did not use external images, fonts or JavaScript libraries. This avoids
+  copyright issues and keeps the prototype original. All visuals are made with
+  CSS shapes, gradients and simple HTML elements.
+
+  One challenge is that users may scroll too quickly and miss the transitions.
+  To reduce this, each section is large and simple. In a larger project, this
+  prototype could become a guided meditation page, a study timer introduction,
+  or an ambient digital art experience.
 */
 
 * {
@@ -16,34 +34,46 @@ html {
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   color: #f5f1e8;
   background: #101624;
   transition: background 0.8s ease;
   overflow-x: hidden;
 }
 
+/* Background moods controlled by JavaScript */
+
 body.start {
-  background: linear-gradient(135deg, #101624, #1b2a3d);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(216, 243, 255, 0.18), transparent 30%),
+    linear-gradient(135deg, #101624, #1b2a3d);
 }
 
 body.morning {
-  background: linear-gradient(135deg, #1f3444, #6e8da0);
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255, 226, 166, 0.22), transparent 32%),
+    linear-gradient(135deg, #23384a, #7897a8);
 }
 
 body.rain {
-  background: linear-gradient(135deg, #172230, #42596a);
+  background:
+    radial-gradient(circle at 75% 20%, rgba(216, 243, 255, 0.18), transparent 30%),
+    linear-gradient(135deg, #172230, #42596a);
 }
 
 body.night {
-  background: linear-gradient(135deg, #080d1a, #202744);
+  background:
+    radial-gradient(circle at 75% 25%, rgba(190, 170, 255, 0.22), transparent 30%),
+    linear-gradient(135deg, #080d1a, #202744);
 }
 
 body.end {
-  background: linear-gradient(135deg, #111827, #192231);
+  background:
+    radial-gradient(circle at 50% 20%, rgba(216, 243, 255, 0.14), transparent 35%),
+    linear-gradient(135deg, #111827, #192231);
 }
 
-/* Progress bar */
+/* Top progress bar */
 
 .progress {
   position: fixed;
@@ -51,21 +81,21 @@ body.end {
   left: 0;
   width: 100%;
   height: 7px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
   z-index: 100;
 }
 
 .progress-fill {
   width: 0%;
   height: 100%;
-  background: #d8f3ff;
+  background: linear-gradient(90deg, #d8f3ff, #e8d7ff);
 }
 
-/* Side dots */
+/* Right side dots */
 
 .mood-nav {
   position: fixed;
-  right: 28px;
+  right: 26px;
   top: 50%;
   transform: translateY(-50%);
   display: grid;
@@ -78,15 +108,17 @@ body.end {
   height: 9px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.3);
+  transition: 0.3s ease;
 }
 
 .dot.active {
   height: 28px;
   border-radius: 20px;
   background: #d8f3ff;
+  box-shadow: 0 0 16px rgba(216, 243, 255, 0.7);
 }
 
-/* Sections */
+/* General section layout */
 
 .section {
   min-height: 100vh;
@@ -105,10 +137,12 @@ body.end {
 }
 
 .hero-content {
+  position: relative;
   z-index: 2;
 }
 
 .eyebrow {
+  margin-bottom: 12px;
   color: #c7c3b8;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -117,13 +151,14 @@ body.end {
 
 h1 {
   margin: 0 0 20px;
-  font-size: clamp(56px, 12vw, 120px);
+  font-size: clamp(56px, 12vw, 118px);
   line-height: 0.9;
 }
 
 h2 {
   margin: 0 0 18px;
-  font-size: clamp(34px, 6vw, 64px);
+  font-size: clamp(34px, 6vw, 62px);
+  line-height: 1;
 }
 
 p {
@@ -138,34 +173,48 @@ p {
 }
 
 .scroll-hint {
-  margin-top: 42px;
+  margin-top: 40px;
   color: #d8f3ff;
+  animation: hintMove 1.5s ease-in-out infinite;
 }
 
-/* Hero background shapes */
+@keyframes hintMove {
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+/* Hero ambient shapes */
 
 .ambient-shape {
   position: absolute;
   border-radius: 50%;
   filter: blur(4px);
   opacity: 0.6;
-  animation: float 6s ease-in-out infinite;
+  animation: floatShape 7s ease-in-out infinite;
 }
 
-.shape-a {
+.shape-one {
   width: 240px;
   height: 240px;
   left: 5%;
   top: 20%;
-  background: radial-gradient(circle, #d8f3ff, transparent 70%);
+  background: radial-gradient(circle, rgba(216, 243, 255, 0.55), transparent 70%);
 }
 
-.shape-b {
+.shape-two {
   width: 170px;
   height: 170px;
   right: 8%;
   bottom: 20%;
-  background: radial-gradient(circle, #e8d7ff, transparent 70%);
+  background: radial-gradient(circle, rgba(232, 215, 255, 0.45), transparent 70%);
+  animation-delay: 1s;
+}
+
+@keyframes floatShape {
+  50% {
+    transform: translateY(-18px) scale(1.04);
+  }
 }
 
 /* Mood sections */
@@ -183,11 +232,12 @@ p {
   border-radius: 28px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
 }
 
 .scene-card {
   opacity: 0;
-  transform: translateY(40px);
+  transform: translateY(42px);
   transition: 0.8s ease;
 }
 
@@ -197,12 +247,13 @@ p {
 }
 
 .number {
+  margin: 0 0 12px;
   color: #d8f3ff;
   letter-spacing: 2px;
   font-size: 13px;
 }
 
-/* Visual shapes */
+/* CSS visual objects */
 
 .visual {
   height: 340px;
@@ -219,15 +270,15 @@ p {
   transform: scale(1);
 }
 
-.visual-sun span,
+.sun span,
 .moon span {
   width: 180px;
   height: 180px;
   border-radius: 50%;
 }
 
-.visual-sun span {
-  background: radial-gradient(circle, #ffe2a6, transparent 70%);
+.sun span {
+  background: radial-gradient(circle, #ffe2a6, rgba(255, 226, 166, 0.08) 70%);
   box-shadow: 0 0 80px rgba(255, 226, 166, 0.45);
 }
 
@@ -249,57 +300,63 @@ p {
 }
 
 .rain-lines {
-  gap: 16px;
+  gap: 15px;
 }
 
 .rain-lines span {
   width: 4px;
-  height: 160px;
+  height: 150px;
   border-radius: 20px;
   background: linear-gradient(to bottom, transparent, #d8f3ff, transparent);
-  animation: rain 1.6s ease-in-out infinite;
+  opacity: 0.7;
+  animation: rainMove 1.6s ease-in-out infinite;
 }
 
 .rain-lines span:nth-child(2) {
   height: 210px;
+  animation-delay: 0.2s;
 }
 
 .rain-lines span:nth-child(3) {
   height: 120px;
+  animation-delay: 0.4s;
 }
 
 .rain-lines span:nth-child(4) {
   height: 180px;
+  animation-delay: 0.6s;
 }
 
-/* Animations */
-
-@keyframes float {
-  50% {
-    transform: translateY(-18px);
-  }
-}
-
-@keyframes rain {
+@keyframes rainMove {
   50% {
     transform: translateY(18px);
   }
 }
 
-/* Mobile */
+/* Reflection section */
+
+.reflection-box {
+  max-width: 780px;
+}
+
+.reflection-box h2:nth-of-type(2) {
+  margin-top: 34px;
+}
+
+/* Responsive design */
 
 @media (max-width: 800px) {
   .mood-section {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 32px;
   }
 
   .visual {
-    height: 220px;
+    height: 230px;
     order: -1;
   }
 
-  .visual-sun span,
+  .sun span,
   .moon span,
   .moon span::after {
     width: 130px;
@@ -313,5 +370,16 @@ p {
   .scene-card,
   .reflection-box {
     padding: 26px;
+  }
+}
+
+@media (max-width: 520px) {
+  .section {
+    width: 92%;
+    padding: 70px 0;
+  }
+
+  p {
+    font-size: 15px;
   }
 }
