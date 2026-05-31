@@ -13,93 +13,135 @@
     <div class="progress-fill" id="progressFill"></div>
   </div>
 
-  <nav class="mood-nav" aria-label="Scroll progress navigation">
-    <span class="dot active"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-    <span class="dot"></span>
-  </nav>
+  <button id="nextButton" class="next-button">
+    Next Mood ↓
+  </button>
 
   <main>
     <section class="section hero" data-mood="start">
-      <div class="hero-content">
-        <p class="eyebrow">Scroll Interaction Prototype</p>
+      <div class="study-icon clock-icon"></div>
+
+      <div class="content">
+        <p class="tag">Scroll Interaction Prototype</p>
+
         <h1>Scrollscape</h1>
 
-        <p class="intro-text">
-          A calm browser experience where scrolling becomes the main interaction.
-          Move through different visual moods by slowly scrolling down the page.
+        <p>
+          Enter a quiet time room. Scroll through different stages of focus,
+          rest and reflection.
         </p>
 
-        <p class="scroll-hint">Scroll to begin ↓</p>
+        <p class="hint">Scroll to begin ↓</p>
       </div>
-
-      <div class="ambient-shape shape-one"></div>
-      <div class="ambient-shape shape-two"></div>
     </section>
 
-    <section class="section mood-section" data-mood="morning">
-      <div class="scene-card">
+    <section class="section" data-mood="warm">
+      <div class="study-icon book-icon"></div>
+
+      <div class="card">
         <p class="number">01</p>
-        <h2>Morning Focus</h2>
-        <p>
-          This first scroll layer creates a soft study mood. The warmer colours
-          and slow fade-in help the user enter the experience gently.
-        </p>
-      </div>
 
-      <div class="visual sun">
-        <span></span>
+        <h2>Warm Up</h2>
+
+        <p>
+          A soft beginning. The user enters the focus space and prepares to start.
+          The scroll action begins the journey.
+        </p>
       </div>
     </section>
 
-    <section class="section mood-section" data-mood="rain">
-      <div class="scene-card">
+    <section class="section" data-mood="focus">
+      <div class="study-icon timer-icon"></div>
+
+      <div class="card">
         <p class="number">02</p>
-        <h2>Rain Pause</h2>
-        <p>
-          This section slows the rhythm of the page. The cool tones and falling
-          lines create a quiet pause between moments of focus.
-        </p>
-      </div>
 
-      <div class="visual rain-lines">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+        <h2>Deep Focus</h2>
+
+        <p>
+          The page becomes quieter and darker. Scrolling creates a slow rhythm
+          that supports concentration.
+        </p>
       </div>
     </section>
 
-    <section class="section mood-section" data-mood="night">
-      <div class="scene-card">
+    <section class="section" data-mood="break">
+      <div class="rain-lines">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="card">
         <p class="number">03</p>
-        <h2>Night Drift</h2>
-        <p>
-          The final mood becomes darker and more reflective. The scroll journey
-          ends with a calm night atmosphere.
-        </p>
-      </div>
 
-      <div class="visual moon">
-        <span></span>
+        <h2>Break</h2>
+
+        <p>
+          A short pause. The moving rain lines create a softer visual rhythm
+          and give the user space to breathe.
+        </p>
       </div>
     </section>
 
-    <section class="section reflection" data-mood="end">
-      <div class="reflection-box">
-        <h2>Prototype Concept</h2>
+    <section class="section" data-mood="night">
+      <div class="study-icon moon-icon"></div>
+
+      <div class="card">
+        <p class="number">04</p>
+
+        <h2>Night Review</h2>
+
         <p>
-          Scrollscape uses scroll as the main browser interaction. Instead of
-          clicking buttons or navigating to different pages, the user scrolls
-          through calm visual moods. The background, progress bar, animated
-          shapes and text transitions all respond to the scroll position.
+          The scroll journey ends with a quiet moment of reflection. The darker
+          mood suggests the end of the study session.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" data-mood="end">
+      <div class="card final-card">
+        <h2>Concept</h2>
+
+        <p>
+          Scrollscape uses scroll as the main browser interaction. The user moves
+          through a quiet time room, and each section represents a different stage
+          of focus. The background, card animation, progress bar and visual symbols
+          all respond to the scroll position.
+        </p>
+
+        <h2>Draft Explanation</h2>
+
+        <p>
+          This is a prototype version. The main focus is testing how scrolling can
+          guide the user through different moods. The text and section names can be
+          developed further later, but the interaction structure is already working.
+        </p>
+
+        <h2>Reference Websites</h2>
+
+        <p>
+          I looked at Calm because it connects to relaxation and focused study.
+          Calm uses soft colours, simple spacing and a peaceful visual style.
+        </p>
+
+        <p>
+          I also looked at Apple product pages because they often use scrolling to
+          reveal information step by step. This inspired the way each section appears
+          one at a time.
+        </p>
+
+        <p>
+          The third reference is New York Times interactive stories. These stories
+          often use scroll to guide the reader through a visual journey, which helped
+          me think about scroll as more than just page movement.
         </p>
 
         <h2>Sources</h2>
+
         <p>
-          No external images, audio, fonts or JavaScript libraries are used.
-          All visuals are created with original HTML, CSS and JavaScript.
+          No external images, audio, fonts or JavaScript libraries are used. All
+          visual elements are created with HTML, CSS and JavaScript.
         </p>
       </div>
     </section>
