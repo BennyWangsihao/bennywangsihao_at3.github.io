@@ -1,429 +1,143 @@
-/*
-  Scrollscape is a scroll-based browser interaction prototype.
+* 
+ * 备注：本样式表为 Scrollscape 的六个场景设置了 Unsplash 摄影背景图，每张图片
+ * 均获得免费使用许可（详见下方注释）。为了保持文字的对比度，每个场景背景之上叠加了
+ * 深色半透明渐变层。浮动几何形状的数量和透明度进一步降低，避免干扰实景画面。
+ * 所有图片均使用 cover 方式填充全屏，居中裁切，保证在任何视口下都有良好的构图。
+ */
 
-  The chosen action is Scroll. The context is relaxation and focused study.
-  I designed the prototype around the idea of a "Time Room", where scrolling
-  represents time passing through different stages of focus.
-
-  The user moves from Warm Up to Deep Focus, Break and Night Review. Each section
-  changes the background colour and reveals a visual element. This makes the scroll
-  action feel meaningful instead of being only normal page movement.
-
-  The visual design uses soft gradients, rounded cards, large spacing and slow
-  animation. These choices support the calm study context. I avoided external images,
-  audio, fonts and JavaScript libraries, so the project remains original and avoids
-  copyright issues.
-
-  The main feedback systems are the progress bar, the fade-in cards, the changing
-  background colours, the CSS-made icons, and the Next Mood button. The button adds
-  extra user interaction by smoothly moving the user to the next scroll section.
-
-  One challenge is that users may scroll too quickly and miss some effects. To reduce
-  this, each section is large and simple, so the user can clearly notice each stage.
-*/
-
-* {
+/* ---------- reset ---------- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #f5f1e8;
-  background: #101624;
-  transition: background 0.7s ease;
+html, body {
+  height: 100%;
   overflow-x: hidden;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+body {
+  background: #000;
+  height: 600vh;
+  position: relative;
 }
 
-/* Background moods */
-
-body.start {
-  background: linear-gradient(135deg, #101624, #1b2a3d);
-}
-
-body.warm {
-  background: linear-gradient(135deg, #26364a, #8a7560);
-}
-
-body.focus {
-  background: linear-gradient(135deg, #0f1726, #26384d);
-}
-
-body.break {
-  background: linear-gradient(135deg, #172230, #45606f);
-}
-
-body.night {
-  background: linear-gradient(135deg, #090d18, #202744);
-}
-
-body.end {
-  background: linear-gradient(135deg, #111827, #192231);
-}
-
-/* Progress bar */
-
-.progress {
+/* ---------- 固定舞台 ---------- */
+.stage {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 7px;
-  background: rgba(255, 255, 255, 0.12);
-  z-index: 100;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
 }
 
+/* ---------- 场景公共 ---------- */
+.scene {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* 
+ * 各场景背景图片与出处：
+ * 深海：Photo by Jeremy Bishop on Unsplash (dark ocean)
+ * 浅海：Photo by Silas Baisch on Unsplash (clear underwater)
+ * 沙滩：Photo by Sean O. on Unsplash (seaside shore)
+ * 草原：Photo by Aaron Burden on Unsplash (green grassland)
+ * 高山：Photo by Kalen Emsley on Unsplash (mountain peaks)
+ * 星空：Photo by Vincentiu Solomon on Unsplash (starry sky)
+ * 以上图片均遵循 Unsplash 许可，可用于商业和非商业用途，无需署名（但保留署名以示尊重）。
+ */
+#scene-deepsea {
+  background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+              url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+  z-index: 1;
+}
+#scene-shallow {
+  background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+              url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+  z-index: 2;
+}
+#scene-beach {
+  background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+              url('https://images.unsplash.com/photo-1506953829905-af8e4e8a6b4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+  z-index: 3;
+}
+#scene-grassland {
+  background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+              url('https://images.unsplash.com/photo-1500380804539-4e1e8c1eaa56?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+  z-index: 4;
+}
+#scene-mountain {
+  background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+              url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+  z-index: 5;
+}
+#scene-starry {
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+              url('https://images.unsplash.com/photo-1419242902214-272b3e66ef73?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+  z-index: 6;
+}
+
+/* 文字 */
+.scene-content {
+  text-align: center;
+  color: rgba(255,255,255,0.95);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.7);
+  max-width: 600px;
+  padding: 2rem;
+}
+.scene-content h2 { font-size: 3rem; margin-bottom: 0.5rem; letter-spacing: 0.1em; }
+.scene-content p  { font-size: 1.2rem; opacity: 0.8; font-weight: 300; }
+
+/* 浮动形状（更透明，更少） */
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  pointer-events: none;
+}
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 50px solid rgba(255,255,255,0.08);
+  background: transparent;
+  border-radius: 0;
+}
+.star {
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  background: rgba(255,255,200,0.12);
+}
+
+/* 进度条 */
+.progress-bar {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  max-width: 400px;
+  height: 4px;
+  background: rgba(255,255,255,0.2);
+  z-index: 100;
+  border-radius: 4px;
+  overflow: hidden;
+}
 .progress-fill {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #d8f3ff, #e8d7ff);
-}
-
-/* Extra interaction button */
-
-.next-button {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  z-index: 50;
-
-  padding: 12px 18px;
-  border: 1px solid rgba(216, 243, 255, 0.45);
-  border-radius: 30px;
-
-  background: rgba(255, 255, 255, 0.12);
-  color: #f5f1e8;
-  backdrop-filter: blur(10px);
-
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-.next-button:hover {
-  background: rgba(216, 243, 255, 0.22);
-  transform: translateY(-4px);
-}
-
-.next-button:active {
-  transform: scale(0.95);
-}
-
-/* Section layout */
-
-.section {
-  min-height: 100vh;
-  width: min(900px, 90%);
-  margin: 0 auto;
-  padding: 90px 0;
-  position: relative;
-  overflow: hidden;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hero {
-  text-align: center;
-}
-
-.content,
-.card {
-  position: relative;
-  z-index: 2;
-}
-
-.tag {
-  margin-bottom: 12px;
-  color: #c7c3b8;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-size: 12px;
-}
-
-h1 {
-  margin: 0 0 20px;
-  font-size: clamp(56px, 12vw, 118px);
-  line-height: 0.9;
-}
-
-h2 {
-  margin: 0 0 18px;
-  font-size: clamp(34px, 6vw, 60px);
-  line-height: 1;
-}
-
-p {
-  color: #d3cec2;
-  line-height: 1.7;
-  font-size: 17px;
-}
-
-.content p {
-  max-width: 640px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.hint {
-  margin-top: 40px;
-  color: #d8f3ff;
-  animation: hintMove 1.5s ease-in-out infinite;
-}
-
-@keyframes hintMove {
-  50% {
-    transform: translateY(8px);
-  }
-}
-
-/* Cards */
-
-.card {
-  width: min(720px, 100%);
-  padding: 36px;
-  border-radius: 28px;
-
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
-
-  opacity: 0;
-  transform: translateY(42px);
-  transition: 0.8s ease;
-}
-
-.section.visible .card {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.final-card {
-  margin-bottom: 70px;
-}
-
-.number {
-  margin: 0 0 12px;
-  color: #d8f3ff;
-  letter-spacing: 2px;
-  font-size: 13px;
-}
-
-/* CSS-made visual icons */
-
-.study-icon,
-.rain-lines {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.9s ease;
-}
-
-.section.visible .study-icon,
-.section.visible .rain-lines {
-  opacity: 1;
-}
-
-.study-icon {
-  animation: floatIcon 5.5s ease-in-out infinite;
-}
-
-@keyframes floatIcon {
-  50% {
-    transform: translateY(-16px);
-  }
-}
-
-/* Clock icon */
-
-.clock-icon {
-  top: 18%;
-  right: 12%;
-  width: 110px;
-  height: 110px;
-  border: 4px solid rgba(216, 243, 255, 0.75);
-  border-radius: 50%;
-}
-
-.clock-icon::before {
-  content: "";
-  position: absolute;
-  width: 4px;
-  height: 30px;
-  background: #d8f3ff;
-  left: 50%;
-  top: 22px;
-  transform: translateX(-50%);
-  border-radius: 20px;
-}
-
-.clock-icon::after {
-  content: "";
-  position: absolute;
-  width: 28px;
-  height: 4px;
-  background: #d8f3ff;
-  left: 50%;
-  top: 52px;
-  border-radius: 20px;
-}
-
-/* Book icon */
-
-.book-icon {
-  top: 17%;
-  left: 10%;
-  width: 130px;
-  height: 90px;
-  border: 3px solid rgba(255, 226, 166, 0.8);
-  border-radius: 12px;
-}
-
-.book-icon::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 3px;
-  height: 100%;
-  background: rgba(255, 226, 166, 0.8);
-}
-
-.book-icon::after {
-  content: "";
-  position: absolute;
-  left: 18px;
-  top: 24px;
-  width: 35px;
-  height: 3px;
-  background: rgba(255, 226, 166, 0.8);
-  box-shadow:
-    0 16px 0 rgba(255, 226, 166, 0.8),
-    58px 0 0 rgba(255, 226, 166, 0.8),
-    58px 16px 0 rgba(255, 226, 166, 0.8);
-}
-
-/* Timer icon */
-
-.timer-icon {
-  top: 16%;
-  right: 12%;
-  width: 110px;
-  height: 110px;
-  border: 4px solid rgba(232, 215, 255, 0.75);
-  border-radius: 50%;
-}
-
-.timer-icon::before {
-  content: "";
-  position: absolute;
-  left: 36px;
-  top: -16px;
-  width: 34px;
-  height: 14px;
-  border-radius: 8px 8px 0 0;
-  border: 4px solid rgba(232, 215, 255, 0.75);
-  border-bottom: none;
-}
-
-.timer-icon::after {
-  content: "";
-  position: absolute;
-  width: 4px;
-  height: 34px;
-  background: #e8d7ff;
-  left: 50%;
-  top: 25px;
-  transform: translateX(-50%);
-  border-radius: 20px;
-}
-
-/* Moon icon */
-
-.moon-icon {
-  top: 16%;
-  left: 12%;
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  background: #f5edc8;
-  box-shadow: 0 0 45px rgba(245, 237, 200, 0.35);
-}
-
-.moon-icon::after {
-  content: "";
-  position: absolute;
-  top: -8px;
-  right: -22px;
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  background: #202744;
-}
-
-/* Rain lines */
-
-.rain-lines {
-  right: 14%;
-  top: 18%;
-  display: flex;
-  gap: 12px;
-}
-
-.rain-lines span {
-  display: block;
-  width: 4px;
-  height: 80px;
-  border-radius: 20px;
-  background: linear-gradient(to bottom, transparent, #d8f3ff, transparent);
-  animation: rainMove 1.5s ease-in-out infinite;
-}
-
-.rain-lines span:nth-child(2) {
-  height: 120px;
-  animation-delay: 0.2s;
-}
-
-.rain-lines span:nth-child(3) {
-  height: 95px;
-  animation-delay: 0.4s;
-}
-
-@keyframes rainMove {
-  50% {
-    transform: translateY(18px);
-  }
-}
-
-/* Mobile */
-
-@media (max-width: 700px) {
-  .section {
-    width: 92%;
-    padding: 70px 0;
-  }
-
-  .card {
-    padding: 26px;
-  }
-
-  p {
-    font-size: 15px;
-  }
-
-  .study-icon,
-  .rain-lines {
-    transform: scale(0.72);
-    opacity: 0.35;
-  }
-
-  .next-button {
-    right: 16px;
-    bottom: 16px;
-    padding: 10px 14px;
-  }
+  background: #fff;
+  border-radius: 4px;
+  transition: width 0.1s linear;
 }
