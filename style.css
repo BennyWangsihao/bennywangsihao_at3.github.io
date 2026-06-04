@@ -1,143 +1,559 @@
-* 
- * 备注：本样式表为 Scrollscape 的六个场景设置了 Unsplash 摄影背景图，每张图片
- * 均获得免费使用许可（详见下方注释）。为了保持文字的对比度，每个场景背景之上叠加了
- * 深色半透明渐变层。浮动几何形状的数量和透明度进一步降低，避免干扰实景画面。
- * 所有图片均使用 cover 方式填充全屏，居中裁切，保证在任何视口下都有良好的构图。
- */
+/*
+Assignment 3 Final Prototype
+Title: My Relax Room
+Context: A personal relaxing room after study
+Chosen Action: Hover
 
-/* ---------- reset ---------- */
-*, *::before, *::after {
+This project is a simple browser interaction prototype rather than a complete website. The
+context is my own relaxing room after study. I chose this context because it is personal,
+easy to understand, and connected to everyday student life. The room contains four main
+objects: a computer, cola, a game console, and headphones. Each object represents one
+small way I relax after finishing study or assignments. The computer represents both work
+and games. Cola represents a carbonated drink and an occasional high-sugar reward. The
+game console represents playing games after submitting assignments. The headphones
+represent listening to pop music to change the mood of the room.
+
+The chosen action is hover. I selected hover because it is a low-pressure and immediate
+browser action. The user does not need to click through pages, drag objects, or complete a
+task. They only move the cursor over objects and receive feedback. This fits the relaxing
+theme because the interaction feels casual, soft, and easy to explore. The prototype focuses
+on one core interaction, which matches the assignment brief.
+
+This final version does not use external images, icons, frameworks, or libraries. The room
+and objects are all created with HTML and CSS. This avoids copyright problems and keeps
+the code easier to submit. The room scene is made with simple visual elements: a dark wall,
+floor, window, moon, city view, poster, desk, and rug. These background elements are not the
+main interaction, but they help create the atmosphere of a personal relaxing room.
+
+The main visual feedback is created with CSS. When the user hovers over an item, the object
+moves upward slightly and becomes brighter. The computer screen uses a glow effect to show
+that it is active. The cola uses small animated bubbles to connect the feedback to a fizzy
+drink. The game console uses a small bounce animation and coloured lights to create a playful
+feeling. The headphones use animated sound waves to show music filling the room. These
+effects are simple, but each one is connected to the meaning of the object.
+
+JavaScript is used only for secondary feedback. When the user hovers over an object, the
+script reads the data-label text from the HTML and displays it in the bottom label. It can also
+play a short local sound if the sound files are placed in the sounds folder. These sounds are
+optional and should be self-recorded or Creative Commons licensed. One challenge is that
+hover works better on desktop than on mobile. If I developed this further, I would add click
+or tap support for phones. Overall, this prototype shows how a small hover action can make
+a personal room feel playful, responsive, and relaxing.
+*/
+
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
-html, body {
-  height: 100%;
-  overflow-x: hidden;
-  font-family: 'Segoe UI', system-ui, sans-serif;
-}
+
 body {
-  background: #000;
-  height: 600vh;
-  position: relative;
-}
-
-/* ---------- 固定舞台 ---------- */
-.stage {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* ---------- 场景公共 ---------- */
-.scene {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  padding: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #181527, #432b5c);
+  color: #fff7e8;
 }
 
-/* 
- * 各场景背景图片与出处：
- * 深海：Photo by Jeremy Bishop on Unsplash (dark ocean)
- * 浅海：Photo by Silas Baisch on Unsplash (clear underwater)
- * 沙滩：Photo by Sean O. on Unsplash (seaside shore)
- * 草原：Photo by Aaron Burden on Unsplash (green grassland)
- * 高山：Photo by Kalen Emsley on Unsplash (mountain peaks)
- * 星空：Photo by Vincentiu Solomon on Unsplash (starry sky)
- * 以上图片均遵循 Unsplash 许可，可用于商业和非商业用途，无需署名（但保留署名以示尊重）。
- */
-#scene-deepsea {
-  background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
-              url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-  z-index: 1;
+.room {
+  position: relative;
+  width: min(1000px, 100%);
+  height: 640px;
+  overflow: hidden;
+  border-radius: 28px;
+  background: linear-gradient(180deg, #292440 0 62%, #3b2841 62% 100%);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.38);
 }
-#scene-shallow {
-  background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
-              url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-  z-index: 2;
-}
-#scene-beach {
-  background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
-              url('https://images.unsplash.com/photo-1506953829905-af8e4e8a6b4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-  z-index: 3;
-}
-#scene-grassland {
-  background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
-              url('https://images.unsplash.com/photo-1500380804539-4e1e8c1eaa56?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-  z-index: 4;
-}
-#scene-mountain {
-  background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
-              url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+
+.title {
+  position: absolute;
+  top: 32px;
+  left: 32px;
   z-index: 5;
 }
-#scene-starry {
-  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-              url('https://images.unsplash.com/photo-1419242902214-272b3e66ef73?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-  z-index: 6;
+
+.title p {
+  color: #ffd166;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin-bottom: 8px;
 }
 
-/* 文字 */
-.scene-content {
-  text-align: center;
-  color: rgba(255,255,255,0.95);
-  text-shadow: 0 2px 12px rgba(0,0,0,0.7);
-  max-width: 600px;
-  padding: 2rem;
+.title h1 {
+  font-size: clamp(42px, 7vw, 72px);
+  line-height: 0.95;
 }
-.scene-content h2 { font-size: 3rem; margin-bottom: 0.5rem; letter-spacing: 0.1em; }
-.scene-content p  { font-size: 1.2rem; opacity: 0.8; font-weight: 300; }
 
-/* 浮动形状（更透明，更少） */
-.shape {
+.window {
   position: absolute;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.06);
-  pointer-events: none;
-}
-.triangle {
-  width: 0;
-  height: 0;
-  border-left: 30px solid transparent;
-  border-right: 30px solid transparent;
-  border-bottom: 50px solid rgba(255,255,255,0.08);
-  background: transparent;
-  border-radius: 0;
-}
-.star {
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  background: rgba(255,255,200,0.12);
-}
-
-/* 进度条 */
-.progress-bar {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 50%;
-  max-width: 400px;
-  height: 4px;
-  background: rgba(255,255,255,0.2);
-  z-index: 100;
-  border-radius: 4px;
+  top: 70px;
+  right: 70px;
+  width: 210px;
+  height: 145px;
+  border: 8px solid #fff7e8;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #081020, #20385c);
   overflow: hidden;
 }
-.progress-fill {
-  width: 0%;
-  height: 100%;
-  background: #fff;
-  border-radius: 4px;
-  transition: width 0.1s linear;
+
+.moon {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #fff7e8;
+  box-shadow: 0 0 34px rgba(255, 247, 232, 0.6);
+}
+
+.city {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 42px;
+  background: repeating-linear-gradient(
+    90deg,
+    #070914 0 22px,
+    transparent 22px 36px
+  );
+}
+
+.poster {
+  position: absolute;
+  top: 160px;
+  left: 75px;
+  width: 105px;
+  height: 135px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #ff8fab, #845ec2);
+  transform: rotate(-5deg);
+  font-weight: bold;
+  letter-spacing: 0.12em;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.25);
+}
+
+.desk {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 180px;
+  height: 34px;
+  border-radius: 999px;
+  background: #7a5235;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.32);
+}
+
+.desk::before,
+.desk::after {
+  content: "";
+  position: absolute;
+  top: 26px;
+  width: 18px;
+  height: 135px;
+  border-radius: 999px;
+  background: #4d3325;
+}
+
+.desk::before {
+  left: 14%;
+}
+
+.desk::after {
+  right: 14%;
+}
+
+.rug {
+  position: absolute;
+  left: 28%;
+  bottom: 40px;
+  width: 44%;
+  height: 95px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    rgba(184, 161, 255, 0.58),
+    rgba(184, 161, 255, 0.1)
+  );
+}
+
+.item {
+  position: absolute;
+  z-index: 10;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.item:hover,
+.item:focus-visible {
+  transform: translateY(-10px) scale(1.06);
+  filter: brightness(1.1);
+  outline: none;
+}
+
+.item-name {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.computer {
+  left: 24%;
+  bottom: 225px;
+  width: 160px;
+}
+
+.screen {
+  height: 95px;
+  display: grid;
+  place-items: center;
+  border: 8px solid #202331;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #101426, #1f7a8c);
+  font-size: 13px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.28);
+  transition: box-shadow 0.25s ease;
+}
+
+.computer:hover .screen,
+.computer:focus-visible .screen {
+  box-shadow:
+    0 0 42px rgba(123, 223, 242, 0.75),
+    0 14px 26px rgba(0, 0, 0, 0.28);
+}
+
+.stand {
+  width: 24px;
+  height: 32px;
+  margin: 0 auto;
+  background: #202331;
+}
+
+.keyboard {
+  width: 110px;
+  height: 24px;
+  margin: 0 auto;
+  border-radius: 8px;
+  background: #202331;
+}
+
+.cola {
+  left: 48%;
+  bottom: 230px;
+  width: 90px;
+}
+
+.can {
+  position: relative;
+  width: 58px;
+  height: 118px;
+  margin: 0 auto;
+  border-radius: 18px 18px 13px 13px;
+  background: linear-gradient(90deg, #8b0000, #ef476f, #8b0000);
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+}
+
+.can::before {
+  content: "COLA";
+  position: absolute;
+  top: 48px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  transform: rotate(-90deg);
+  font-weight: bold;
+  color: white;
+}
+
+.bubble {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: white;
+  opacity: 0;
+  animation: bubble 1s infinite ease-in-out;
+}
+
+.bubble.one {
+  left: 24px;
+  top: -10px;
+}
+
+.bubble.two {
+  left: 52px;
+  top: -2px;
+  animation-delay: 0.2s;
+}
+
+.bubble.three {
+  left: 68px;
+  top: 10px;
+  animation-delay: 0.4s;
+}
+
+.cola:hover .bubble,
+.cola:focus-visible .bubble {
+  opacity: 1;
+}
+
+@keyframes bubble {
+  0% {
+    transform: translateY(45px);
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+
+.console {
+  left: 39%;
+  bottom: 82px;
+  width: 210px;
+}
+
+.controller {
+  position: relative;
+  width: 180px;
+  height: 70px;
+  margin: 0 auto;
+  border-radius: 34px;
+  background: #202331;
+  box-shadow: 0 14px 25px rgba(0, 0, 0, 0.32);
+}
+
+.light {
+  position: absolute;
+  top: 30px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #555;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.light.one {
+  left: 76px;
+}
+
+.light.two {
+  left: 98px;
+}
+
+.light.three {
+  left: 120px;
+}
+
+.console:hover .controller,
+.console:focus-visible .controller {
+  animation: bounce 0.55s infinite alternate ease-in-out;
+}
+
+.console:hover .light.one,
+.console:focus-visible .light.one {
+  background: #8ac926;
+  box-shadow: 0 0 16px #8ac926;
+}
+
+.console:hover .light.two,
+.console:focus-visible .light.two {
+  background: #7bdff2;
+  box-shadow: 0 0 16px #7bdff2;
+}
+
+.console:hover .light.three,
+.console:focus-visible .light.three {
+  background: #ff8fab;
+  box-shadow: 0 0 16px #ff8fab;
+}
+
+@keyframes bounce {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-7px);
+  }
+}
+
+.headphones {
+  right: 17%;
+  bottom: 230px;
+  width: 150px;
+}
+
+.headband {
+  position: relative;
+  width: 100px;
+  height: 90px;
+  margin: 0 auto;
+  border: 10px solid #202331;
+  border-bottom: none;
+  border-radius: 80px 80px 0 0;
+}
+
+.headband::before,
+.headband::after {
+  content: "";
+  position: absolute;
+  top: 58px;
+  width: 34px;
+  height: 52px;
+  border-radius: 14px;
+  background: #202331;
+}
+
+.headband::before {
+  left: -20px;
+}
+
+.headband::after {
+  right: -20px;
+}
+
+.wave {
+  position: absolute;
+  top: 36px;
+  right: -8px;
+  width: 38px;
+  height: 70px;
+  border-right: 4px solid rgba(123, 223, 242, 0.9);
+  border-radius: 50%;
+  opacity: 0;
+  animation: wave 0.9s infinite ease-out;
+}
+
+.wave.two {
+  right: -28px;
+  height: 90px;
+  top: 26px;
+  animation-delay: 0.2s;
+}
+
+.headphones:hover .wave,
+.headphones:focus-visible .wave {
+  opacity: 1;
+}
+
+@keyframes wave {
+  0% {
+    transform: scaleX(0.7);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: scaleX(1.2);
+    opacity: 0;
+  }
+}
+
+.label {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  max-width: 80%;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: rgba(255, 247, 232, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  text-align: center;
+  z-index: 20;
+}
+
+.note {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  max-width: 190px;
+  color: rgba(255, 247, 232, 0.62);
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: right;
+}
+
+audio {
+  display: none;
+}
+
+@media (max-width: 850px) {
+  .room {
+    height: 760px;
+  }
+
+  .window {
+    right: 28px;
+    top: 92px;
+    transform: scale(0.8);
+    transform-origin: top right;
+  }
+
+  .poster {
+    left: 35px;
+    top: 170px;
+    transform: rotate(-5deg) scale(0.85);
+  }
+
+  .computer {
+    left: 10%;
+    bottom: 255px;
+    transform: scale(0.82);
+    transform-origin: bottom left;
+  }
+
+  .cola {
+    left: 43%;
+    bottom: 250px;
+    transform: scale(0.86);
+    transform-origin: bottom center;
+  }
+
+  .headphones {
+    right: 6%;
+    bottom: 250px;
+    transform: scale(0.82);
+    transform-origin: bottom right;
+  }
+
+  .console {
+    left: 30%;
+    bottom: 100px;
+    transform: scale(0.85);
+    transform-origin: bottom center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

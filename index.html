@@ -1,22 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scrollscape</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Relax Room</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-  <!-- 
-    备注：Scrollscape 是一个以“滚动”为唯一交互的数字景观。六个场景的背景现在使用
-    Unsplash 上的实景摄影图片，分别对应深海、浅海、沙滩、草原、高山和星空。
-    每一张图片都经过半透明黑色叠加，以确保白色文字始终可读。
-    页面结构保持极简，让滚动成为探索旅程的核心驱动力。
-  -->
-  <div class="stage" id="stage"></div>
-  <div class="progress-bar">
-    <div class="progress-fill" id="progressFill"></div>
-  </div>
+  <main class="room">
+    <div class="title">
+      <p>Hover Interaction Prototype</p>
+      <h1>My Relax Room</h1>
+    </div>
+
+    <div class="window">
+      <div class="moon"></div>
+      <div class="city"></div>
+    </div>
+
+    <div class="poster">RELAX</div>
+    <div class="desk"></div>
+    <div class="rug"></div>
+
+    <div class="item computer" tabindex="0" data-label="Computer: work and games in the same place." data-sound="computerSound">
+      <div class="screen">WORK / GAME</div>
+      <div class="stand"></div>
+      <div class="keyboard"></div>
+      <span class="item-name">Computer</span>
+    </div>
+
+    <div class="item cola" tabindex="0" data-label="Cola: a carbonated drink. Sometimes a high-sugar drink feels like a small reward." data-sound="colaSound">
+      <span class="bubble one"></span>
+      <span class="bubble two"></span>
+      <span class="bubble three"></span>
+      <div class="can"></div>
+      <span class="item-name">Cola</span>
+    </div>
+
+    <div class="item console" tabindex="0" data-label="Game console: nothing is more relaxing than playing games after submitting an assignment." data-sound="gameSound">
+      <div class="controller">
+        <span class="light one"></span>
+        <span class="light two"></span>
+        <span class="light three"></span>
+      </div>
+      <span class="item-name">Game Console</span>
+    </div>
+
+    <div class="item headphones" tabindex="0" data-label="Headphones: pop music is also a good way to relax." data-sound="musicSound">
+      <div class="headband"></div>
+      <span class="wave one"></span>
+      <span class="wave two"></span>
+      <span class="item-name">Headphones</span>
+    </div>
+
+    <div class="label" id="label">Hover over an object to relax</div>
+    <p class="note">Simple version: no images, no external library.</p>
+
+    <audio id="computerSound" src="sounds/computer.mp3" preload="auto"></audio>
+    <audio id="colaSound" src="sounds/cola.mp3" preload="auto"></audio>
+    <audio id="gameSound" src="sounds/game.mp3" preload="auto"></audio>
+    <audio id="musicSound" src="sounds/music.mp3" preload="auto"></audio>
+  </main>
+
   <script src="script.js"></script>
 </body>
 </html>
